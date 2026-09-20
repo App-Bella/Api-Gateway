@@ -7,50 +7,50 @@ spring:
 
   cloud:
     gateway:
-      mvc:
-        routes:
-          - id: ms-usuarios-auth
-            uri: http://localhost:8081
-            predicates:
-              - Path=/auth/**
-          - id: ms-usuarios
-            uri: http://localhost:8081
-            predicates:
-              - Path=/usuarios/**
+      server:
+        webmvc:
+          routes:
+            - id: usuarios
+              uri: http://localhost:8081
+              predicates:
+                - Path=/auth/**
+            - id: ms-usuarios
+              uri: http://localhost:8081
+              predicates:
+                - Path=/usuarios/**
+            - id: ms-citas
+              uri: http://localhost:8082
+              predicates:
+                - Path=/citas/**
+            - id: ms-servicios
+              uri: http://localhost:8082
+              predicates:
+                - Path=/servicios/**
 
-          - id: ms-citas
-            uri: http://localhost:8082
-            predicates:
-              - Path=/citas/**
-          - id: ms-servicios
-            uri: http://localhost:8082
-            predicates:
-              - Path=/servicios/**
+            - id: ms-academia
+              uri: http://localhost:8083
+              predicates:
+                - Path=/api/programas/**, /api/modulos/**, /api/clases/**, /api/matriculas/**, /api/certificados/**
 
-          - id: ms-academia
-            uri: http://localhost:8083
-            predicates:
-              - Path=/api/programas/**, /api/modulos/**, /api/clases/**, /api/matriculas/**, /api/certificados/**
+            - id: ms-inventario
+              uri: http://localhost:8084
+              predicates:
+                - Path=/api/insumos/**, /api/movimientos/**
 
-          - id: ms-inventario
-            uri: http://localhost:8084
-            predicates:
-              - Path=/api/insumos/**, /api/movimientos/**
+            - id: ms-notificaciones
+              uri: http://localhost:4000
+              predicates:
+                - Path=/api/notificaciones/**
 
-          - id: ms-notificaciones
-            uri: http://localhost:4000
-            predicates:
-              - Path=/api/notificaciones/**
+            - id: ms-reportes
+              uri: http://localhost:5000
+              predicates:
+                - Path=/reportes/**
 
-          - id: ms-reportes
-            uri: http://localhost:5000
-            predicates:
-              - Path=/reportes/**
-
-          - id: ms-analitica
-            uri: http://localhost:5001
-            predicates:
-              - Path=/analitica/**
+            - id: ms-analitica
+              uri: http://localhost:5001
+              predicates:
+                - Path=/analitica/**
 
 app:
   jwt:
