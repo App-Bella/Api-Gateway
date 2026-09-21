@@ -29,6 +29,7 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+
                 // Rutas públicas (Login, registro, health checks)
                 .requestMatchers("/auth/**", "/health", "/error").permitAll()
 
@@ -36,9 +37,14 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/servicios/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/servicios/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/servicios/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
-
-                // Lectura de servicios -> Autenticado
+                .requestMatchers(HttpMethod.PATCH, "/servicios/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
                 .requestMatchers(HttpMethod.GET, "/servicios/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/programas/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/programas/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                .requestMatchers(HttpMethod.PATCH, "/api/programas/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/programas/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/usuarios/*/rol").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/usuarios/*").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
 
                 // Resto de endpoints de la aplicación -> Autenticado
                 .anyRequest().authenticated()
